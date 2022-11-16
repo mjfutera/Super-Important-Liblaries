@@ -15,17 +15,18 @@
         return $array;
     }
 
-    function generateKey() {
+    function generateKey() { //For  API
         return implode('-', str_split(substr(strtolower(md5(microtime().rand(1000, 9999))), 0, 30), 6));
     }
 
     function emailValidator($email) {
-        $regex = "/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i";
-        if (preg_match($regex, $email)==1) {
-            return true;
-        } else {
-            return false;
-        }
+        $regex = '/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i';
+        return preg_match($regex, $email);
+    }
+
+    function loginValidator($login) {
+        $regex = '/^[A-Za-z][A-Za-z0-9_]{7,29}$/';
+        return (preg_match($regex, $login) && strlen($login)>7);
     }
 
     function generatePassword() {
@@ -37,5 +38,9 @@
             $pass[] = $alphabet[$n];
         }
         return implode($pass); //turn the array into a string
+    }
+
+    function secureInput($input) {
+        return htmlentities($input, ENT_QUOTES, "UTF-8");
     }
 ?>
