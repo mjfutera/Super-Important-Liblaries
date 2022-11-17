@@ -24,9 +24,25 @@
         return preg_match($regex, $email);
     }
 
+    $passRegEx['length'] = 7;
+    $passRegEx['capitalLetters'] = "/[A-Z]/";
+    $passRegEx['smallLetters'] = "/[a-z]/";
+    $passRegEx['numbers'] = "/\d/";
+    $passRegEx['specialDigits'] = "/[!@#$%^&*()]/";
+    $passRegEx['noSpaces'] = "/[ ]/";
+
     function loginValidator($login) {
-        $regex = '/^[A-Za-z][A-Za-z0-9_]{7,29}$/';
-        return (preg_match($regex, $login) && strlen($login)>7);
+        $length = (strlen($pass) > $passRegEx['length']);
+        $capitalLetters = $passRegEx['capitalLetters'].test($password);
+        $smallLetters = $passRegEx['smallLetters'].test($password);
+        $numbers = $passRegEx['numbers'].test($password);
+        $specialDigits = $passRegEx['specialDigits'].test($password);
+        $noSpaces = !$passRegEx['noSpaces'].test($password);
+        return ($length && $capitalLetters && $smallLetters && $numbers && $specialDigits && $noSpaces);
+    }
+
+    function loginLengthValidator($login) {
+        return (strlen($login) > $passRegEx['length']);
     }
 
     function generatePassword() {
