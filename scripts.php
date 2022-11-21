@@ -19,30 +19,27 @@
         return implode('-', str_split(substr(strtolower(md5(microtime().rand(1000, 9999))), 0, 30), 6));
     }
 
+    function loginValidator($login) {
+        return preg_match("/^[A-Za-z][A-Za-z0-9_!]{6,29}$/i", $login);
+    }
+
     function emailValidator($email) {
         $regex = '/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i';
         return preg_match($regex, $email);
     }
 
-    $passRegEx['length'] = 7;
-    $passRegEx['capitalLetters'] = "/[A-Z]/";
-    $passRegEx['smallLetters'] = "/[a-z]/";
-    $passRegEx['numbers'] = "/\d/";
-    $passRegEx['specialDigits'] = "/[!@#$%^&*()]/";
-    $passRegEx['noSpaces'] = "/[ ]/";
-
-    function loginValidator($login) {
-        $length = (strlen($pass) > $passRegEx['length']);
-        $capitalLetters = $passRegEx['capitalLetters'].test($password);
-        $smallLetters = $passRegEx['smallLetters'].test($password);
-        $numbers = $passRegEx['numbers'].test($password);
-        $specialDigits = $passRegEx['specialDigits'].test($password);
-        $noSpaces = !$passRegEx['noSpaces'].test($password);
+    function passwordValidator($password) {
+        $length = (strlen($password) > 7);
+        $capitalLetters = preg_match("/[A-Z]/", $password);
+        $smallLetters = preg_match("/[a-z]/", $password);
+        $numbers = preg_match("/\d/", $password);
+        $specialDigits = preg_match("/[!@#$%^&*()]/", $password);
+        $noSpaces = !preg_match("/[ ]/", $password);
         return ($length && $capitalLetters && $smallLetters && $numbers && $specialDigits && $noSpaces);
     }
 
     function loginLengthValidator($login) {
-        return (strlen($login) > $passRegEx['length']);
+        return (strlen($login) > 7);
     }
 
     function generatePassword() {
