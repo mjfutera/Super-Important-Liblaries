@@ -141,3 +141,24 @@ const generatePassword = () => {
         document.getElementById(replyField+"-6").style.textDecoration = "none";
     }
  }
+
+ const timer = (date, replyField) => {
+    const myDate = new Date(date);
+    const innerCalc = () => {
+        const userDate = new Date();
+        if (userDate<myDate) {
+            const difference = myDate-userDate;
+            // const months = 
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            document.getElementById(replyField).innerHTML = `${days} days, 
+            ${hours} hrs, ${minutes} min, ${seconds} sec`;
+        } else { 
+            document.getElementById(replyField).innerHTML = "after term";
+        }
+        setTimeout(innerCalc, 1000);
+    }
+    innerCalc();
+}
