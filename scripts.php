@@ -38,9 +38,7 @@
         return ($length && $capitalLetters && $smallLetters && $numbers && $specialDigits && $noSpaces);
     }
 
-    function loginLengthValidator($login) {
-        return (strlen($login) > 7);
-    }
+    function loginLengthValidator($login) {return (strlen($login) > 7);}
 
     function generatePassword() {
         $alphabet = '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -53,7 +51,10 @@
         return implode($pass); //turn the array into a string
     }
 
-    function secureInput($input) {
-        return htmlentities($input, ENT_QUOTES, "UTF-8");
+    function secureInput($input) {return htmlentities($input, ENT_QUOTES, "UTF-8");}
+
+    function URLarray ($url = NULL) {
+        if ($url===NULL) {$url = $_SERVER['REQUEST_URI']; }
+        return explode("/", parse_url($url, PHP_URL_PATH));
     }
 ?>

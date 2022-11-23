@@ -162,3 +162,28 @@ const generatePassword = () => {
     }
     innerCalc();
 }
+
+const sendRegistration = async () => {
+    const email = document.getElementById("email").value;
+    const login = document.getElementById("login").value;
+    const password = document.getElementById("password").value;
+    const password1 = document.getElementById("password1").value;
+    const emailInDB = await getData(`regcheck.php?email=${email}`);
+    const loginInDB = await getData(`regcheck.php?login=${login}`);
+    if (emailValidator(email) && !emailInDB.email && loginValidator(login) && !loginInDB.login && passwordValidator(password) && secondPasswordValidator(password, password1)) {
+        document.getElementById("registration").submit();
+    } else {
+        alert(`check fields again, please`);
+    }
+}
+
+const seePassword = (passField1, passField2) => {
+    const field1 = document.getElementById(passField1).getAttribute("type");
+    if(field1==="password") {
+        document.getElementById(passField1).setAttribute("type", "text");
+        document.getElementById(passField2).setAttribute("type", "text");
+    } else {
+        document.getElementById(passField1).setAttribute("type", "password");
+        document.getElementById(passField2).setAttribute("type", "password");
+    }
+}
