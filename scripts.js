@@ -1,52 +1,52 @@
 const getData = async (url) => await fetch(url).then(r => r.json());
 
 const emailValidator = email => {
-    reg =  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    return (email.length>0 && reg.test(email.toLowerCase()));
+    reg = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    return (email.length > 0 && reg.test(email.toLowerCase()));
 };
 
 const loginValidator = login => {
-    reg =  /^[A-Za-z][A-Za-z0-9_!]{6,29}$/i;
+    reg = /^[A-Za-z][A-Za-z0-9_!]{6,29}$/i;
     return reg.test(login);
 };
 
 const loginLengthValidator = login => {
-    return (login.length>6);
+    return (login.length > 6);
 }
 
 const passRegEx = {
-    "length" : 7,
-    "capitalLetters" : /[A-Z]/,
-    "smallLetters" : /[a-z]/,
-    "numbers" : /\d/,
-    "specialDigits" : /[!@#$%^&*()]/,
-    "noSpaces" : /[ ]/
+    "length": 7,
+    "capitalLetters": /[A-Z]/,
+    "smallLetters": /[a-z]/,
+    "numbers": /\d/,
+    "specialDigits": /[!@#$%^&*()]/,
+    "noSpaces": /[ ]/
 }
 
 const passwordValidator = pass => {
     const length = (pass.length > passRegEx['length']);
-    const capitalLetters = passRegEx['capitalLetters'].test(password);
-    const smallLetters = passRegEx['smallLetters'].test(password);
-    const numbers = passRegEx['numbers'].test(password);
-    const specialDigits = passRegEx['specialDigits'].test(password);
-    const noSpaces = !passRegEx['noSpaces'].test(password);
+    const capitalLetters = passRegEx['capitalLetters'].test(pass);
+    const smallLetters = passRegEx['smallLetters'].test(pass);
+    const numbers = passRegEx['numbers'].test(pass);
+    const specialDigits = passRegEx['specialDigits'].test(pass);
+    const noSpaces = !passRegEx['noSpaces'].test(pass);
     return (length && capitalLetters && smallLetters && numbers && specialDigits && noSpaces);
 }
 
-const generatePassword = () => {
+const passwordGenerator = () => {
     const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const passwordLength = 15;
     let password = "";
     for (let i = 0; i <= passwordLength; i++) {
-    let randomNumber = Math.floor(Math.random() * chars.length);
-    password += chars.substring(randomNumber, randomNumber +1);
+        let randomNumber = Math.floor(Math.random() * chars.length);
+        password += chars.substring(randomNumber, randomNumber + 1);
     }
     return password;
- }
+}
 
- const isEmailOk = async (emailField, replyField) => {
+const isEmailOk = async (emailField, replyField) => {
     const email = document.getElementById(emailField).value;
-    if(!emailValidator(email)) {
+    if (!emailValidator(email)) {
         document.getElementById(replyField).innerHTML = '';
         document.getElementById(replyField).innerHTML = 'Incorrect email';
         exit();
@@ -56,16 +56,16 @@ const generatePassword = () => {
         if (emailInDB.email === true) {
             document.getElementById(replyField).innerHTML = 'Email already in Data Base';
             exit();
-        } else if (emailInDB.email === false){
+        } else if (emailInDB.email === false) {
             document.getElementById(replyField).innerHTML = 'Email available';
             exit();
         }
     }
- }
+}
 
- const isLoginOK = async (loginField, replyField) => {
+const isLoginOK = async (loginField, replyField) => {
     const login = document.getElementById(loginField).value;
-    if(!loginLengthValidator(login)) {
+    if (!loginLengthValidator(login)) {
         document.getElementById(replyField).innerHTML = '';
         document.getElementById(replyField).innerHTML = 'Incorrect login. Login have to be at lest than 7 characters.';
         exit();
@@ -79,14 +79,14 @@ const generatePassword = () => {
         if (loginInDB.login === true) {
             document.getElementById(replyField).innerHTML = 'Login already in Data Base';
             exit();
-        } else if (loginInDB.login === false){
+        } else if (loginInDB.login === false) {
             document.getElementById(replyField).innerHTML = 'Login available';
             exit();
         }
     }
- }
+}
 
- const isPasswordOk = (passwordField, replyField) => {
+const isPasswordOk = (passwordField, replyField) => {
     const password = document.getElementById(passwordField).value;
     document.getElementById(replyField).innerHTML = `
     <ul>
@@ -99,55 +99,55 @@ const generatePassword = () => {
     </ul>
     `;
     if (passRegEx['length'] < password.length) {
-        document.getElementById(replyField+"-1").style.color = "green";
-        document.getElementById(replyField+"-1").style.textDecoration = "line-through";
+        document.getElementById(replyField + "-1").style.color = "green";
+        document.getElementById(replyField + "-1").style.textDecoration = "line-through";
     } else {
-        document.getElementById(replyField+"-1").style.color = "red";
-        document.getElementById(replyField+"-1").style.textDecoration = "none";
+        document.getElementById(replyField + "-1").style.color = "red";
+        document.getElementById(replyField + "-1").style.textDecoration = "none";
     }
     if (passRegEx['capitalLetters'].test(password)) {
-        document.getElementById(replyField+"-2").style.color = "green";
-        document.getElementById(replyField+"-2").style.textDecoration = "line-through";
+        document.getElementById(replyField + "-2").style.color = "green";
+        document.getElementById(replyField + "-2").style.textDecoration = "line-through";
     } else {
-        document.getElementById(replyField+"-2").style.color = "red";
-        document.getElementById(replyField+"-2").style.textDecoration = "none";
+        document.getElementById(replyField + "-2").style.color = "red";
+        document.getElementById(replyField + "-2").style.textDecoration = "none";
     }
     if (passRegEx['smallLetters'].test(password)) {
-        document.getElementById(replyField+"-3").style.color = "green";
-        document.getElementById(replyField+"-3").style.textDecoration = "line-through";
+        document.getElementById(replyField + "-3").style.color = "green";
+        document.getElementById(replyField + "-3").style.textDecoration = "line-through";
     } else {
-        document.getElementById(replyField+"-3").style.color = "red";
-        document.getElementById(replyField+"-3").style.textDecoration = "none";
+        document.getElementById(replyField + "-3").style.color = "red";
+        document.getElementById(replyField + "-3").style.textDecoration = "none";
     }
     if (passRegEx['numbers'].test(password)) {
-        document.getElementById(replyField+"-4").style.color = "green";
-        document.getElementById(replyField+"-4").style.textDecoration = "line-through";
+        document.getElementById(replyField + "-4").style.color = "green";
+        document.getElementById(replyField + "-4").style.textDecoration = "line-through";
     } else {
-        document.getElementById(replyField+"-4").style.color = "red";
-        document.getElementById(replyField+"-4").style.textDecoration = "none";
+        document.getElementById(replyField + "-4").style.color = "red";
+        document.getElementById(replyField + "-4").style.textDecoration = "none";
     }
     if (passRegEx['specialDigits'].test(password)) {
-        document.getElementById(replyField+"-5").style.color = "green";
-        document.getElementById(replyField+"-5").style.textDecoration = "line-through";
+        document.getElementById(replyField + "-5").style.color = "green";
+        document.getElementById(replyField + "-5").style.textDecoration = "line-through";
     } else {
-        document.getElementById(replyField+"-5").style.color = "red";
-        document.getElementById(replyField+"-5").style.textDecoration = "none";
+        document.getElementById(replyField + "-5").style.color = "red";
+        document.getElementById(replyField + "-5").style.textDecoration = "none";
     }
     if (!passRegEx['noSpaces'].test(password)) {
-        document.getElementById(replyField+"-6").style.color = "green";
-        document.getElementById(replyField+"-6").style.textDecoration = "line-through";
+        document.getElementById(replyField + "-6").style.color = "green";
+        document.getElementById(replyField + "-6").style.textDecoration = "line-through";
     } else {
-        document.getElementById(replyField+"-6").style.color = "red";
-        document.getElementById(replyField+"-6").style.textDecoration = "none";
+        document.getElementById(replyField + "-6").style.color = "red";
+        document.getElementById(replyField + "-6").style.textDecoration = "none";
     }
- }
+}
 
- const timer = (date, replyField) => {
+const timer = (date, replyField) => {
     const myDate = new Date(date);
     const innerCalc = () => {
         const userDate = new Date();
-        if (userDate<myDate) {
-            const difference = myDate-userDate;
+        if (userDate < myDate) {
+            const difference = myDate - userDate;
             // const months = 
             const days = Math.floor(difference / (1000 * 60 * 60 * 24));
             const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -155,7 +155,7 @@ const generatePassword = () => {
             const seconds = Math.floor((difference % (1000 * 60)) / 1000);
             document.getElementById(replyField).innerHTML = `${days} days, 
             ${hours} hrs, ${minutes} min, ${seconds} sec`;
-        } else { 
+        } else {
             document.getElementById(replyField).innerHTML = "after term";
         }
         setTimeout(innerCalc, 1000);
@@ -179,11 +179,20 @@ const sendRegistration = async () => {
 
 const seePassword = (passField1, passField2) => {
     const field1 = document.getElementById(passField1).getAttribute("type");
-    if(field1==="password") {
+    if (field1 === "password") {
         document.getElementById(passField1).setAttribute("type", "text");
         document.getElementById(passField2).setAttribute("type", "text");
     } else {
         document.getElementById(passField1).setAttribute("type", "password");
         document.getElementById(passField2).setAttribute("type", "password");
     }
+}
+
+module.exports = {
+    loginLengthValidator,
+    emailValidator,
+    getData,
+    passwordValidator,
+    passwordGenerator,
+    loginValidator
 }
