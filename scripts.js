@@ -188,10 +188,17 @@ const seePassword = (passField1, passField2) => {
     }
 }
 
+const copyToClipboard= field => {
+    const copyText = document.getElementById(field);
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+    navigator.clipboard.writeText(copyText.value);
+    alert("Copied the text: " + copyText.value);
+  }
+
 module.exports = {
     loginLengthValidator,
     emailValidator,
-    getData,
     passwordValidator,
     passwordGenerator,
     loginValidator

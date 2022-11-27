@@ -1,38 +1,38 @@
-const {emailValidator, getData, passwordValidator, passwordGenerator, loginValidator} = require('./scripts');
+const {emailValidator, passwordValidator, passwordGenerator, loginValidator} = require('./scripts');
 
 describe("emailValidator checker", () => {
     test('Correct email', () => {
         expect(emailValidator('mojasuperfirma@gmail.com')).toBeTruthy();
     });
-    test('2*@ and more - incorrect', () => {
+    test('2*@ and more - Incorrect', () => {
         expect(emailValidator('mojasuperfirma@@gmail.com')).toBeFalsy();
     });
-    test('No domain extension - incorrect', () => {
+    test('No domain extension - Incorrect', () => {
         expect(emailValidator('mojasuperfirma@gmail')).toBeFalsy();
     });
-    test('Space in email - incorrect', () => {
+    test('Space in email - Incorrect', () => {
         expect(emailValidator('mojasuper firma@gmail.com')).toBeFalsy();
     });
 }); 
 
 describe("passwordValidator checker", () => {
     test('Correct password', async () => {
-        expect(passwordValidator('9MZ6d5123!')).toBeTruthy();
+        expect(passwordValidator('yNaTccN*qnjOCZ34')).toBeTruthy();
     });
     test('Missing capital letter - Incorrect', async () => {
-        expect(passwordValidator('9mz6d5123!')).toBeFalsy();
+        expect(passwordValidator('ynatccn*qnjacz34')).toBeFalsy();
     });
     test('Missing small letter - Incorrect', async () => {
-        expect(passwordValidator('9MZ6D5123!')).toBeFalsy();
+        expect(passwordValidator('YNATCCN*QNJOCZ34!')).toBeFalsy();
     });
     test('Missing numbers letter - Incorrect', async () => {
         expect(passwordValidator('SuperLongPassword!')).toBeFalsy();
     });
     test('Missing special digit - Incorrect', async () => {
-        expect(passwordValidator('9MZ6D5123a')).toBeFalsy();
+        expect(passwordValidator('yNaTccNqnjOCZ34')).toBeFalsy();
     });
     test('Have spaces - Incorrect', async () => {
-        expect(passwordValidator('9MZ6D5123a')).toBeFalsy();
+        expect(passwordValidator('yNaTccN* qnjOCZ34')).toBeFalsy();
     });
 });
 
@@ -42,18 +42,14 @@ describe("Password generator", () =>{
     });
 });
 
-describe.only("Login validator", () => {
+describe("Login validator", () => {
     test("Correct login", () => {
         expect(loginValidator('mjfutera')).toBeTruthy();
     });
-    test("Correct login", () => {
-        expect(loginValidator('mjfutera')).toBeTruthy();
+    test("To short - Incorrect", () => {
+        expect(loginValidator('mjfa')).toBeFalsy();
     });
-});
-
-describe("API tester", () => {
-    test('JokeAPI', async () => {
-        const joke = await getData('https://jokeapi.mjblog.ovh/');
-        expect(joke['API_Owner']).toBe('Michal Futera');
+    test("Spaces between - Incorrect", () => {
+        expect(loginValidator('mj futera')).toBeFalsy();
     });
 });
