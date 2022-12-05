@@ -196,10 +196,33 @@ const copyToClipboard= field => {
     alert("Copied the text: " + copyText.value);
   }
 
+const mysql = require('mysql'); // 
+
+const GetDataLikeBartekSaid = (db_details, sql, callback) => {
+    const connection = mysql.createConnection(db_details);
+    connection.connect();
+    connection.query(sql, callback);
+    connection.end();
+}
+
+const DataFromDB = (db_details, sql) => {
+    const mysql      = require('mysql'); // 
+    const connection = mysql.createConnection(db_details);
+    connection.connect();
+    connection.query(sql, function (error, results, fields) {
+      if (error) throw error;
+      const data = results;
+      return data;
+    });
+    connection.end();
+    return data;
+}
+
 module.exports = {
     loginLengthValidator,
     emailValidator,
     passwordValidator,
     passwordGenerator,
-    loginValidator
+    loginValidator,
+    DataFromDB
 }
