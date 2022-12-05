@@ -204,7 +204,7 @@ const copyToClipboard= field => {
 
 const polishPostCodeModifier = postcode => {
     if(/^\d{5}$/.test(postcode)){
-        const postcode = postcode.split('');
+        postcode = postcode.split('');
         return `${postcode[0]}${postcode[1]}-${postcode[2]}${postcode[3]}${postcode[4]}`;
     }
     return postcode;
@@ -226,27 +226,27 @@ const dutchPostCodeModifier = postcode => {
 
 // Dodatki od Bartka
 
-const mysql = require('mysql'); // 
+// const mysql = require('mysql'); // 
 
-const GetDataLikeBartekSaid = (db_details, sql, callback) => {
-    const connection = mysql.createConnection(db_details);
-    connection.connect();
-    connection.query(sql, callback);
-    connection.end();
-}
+// const GetDataLikeBartekSaid = (db_details, sql, callback) => {
+//     const connection = mysql.createConnection(db_details);
+//     connection.connect();
+//     connection.query(sql, callback);
+//     connection.end();
+// }
 
-const DataFromDB = (db_details, sql) => {
-    const mysql      = require('mysql'); // 
-    const connection = mysql.createConnection(db_details);
-    connection.connect();
-    connection.query(sql, function (error, results, fields) {
-      if (error) throw error;
-      const data = results;
-      return data;
-    });
-    connection.end();
-    return data;
-}
+// const DataFromDB = (db_details, sql) => {
+//     const mysql      = require('mysql'); // 
+//     const connection = mysql.createConnection(db_details);
+//     connection.connect();
+//     connection.query(sql, function (error, results, fields) {
+//       if (error) throw error;
+//       const data = results;
+//       return data;
+//     });
+//     connection.end();
+//     return data;
+// }
 
 module.exports = {
     loginLengthValidator,
@@ -254,5 +254,8 @@ module.exports = {
     passwordValidator,
     passwordGenerator,
     loginValidator,
-    DataFromDB
+    polishPostCodeVerifier,
+    polishPostCodeModifier,
+    dutchPostCodeVerifier,
+    dutchPostCodeModifier
 }
