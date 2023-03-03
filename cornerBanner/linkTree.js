@@ -5,11 +5,11 @@ const cornerBanner = () => {
         document.head.appendChild(styles);
 
         const banner = document.createElement('img');
-        banner.setAttribute('src', 'https://important.michalfutera.pro/cornerBanner/bmc-corner.png');
-        banner.setAttribute('class', 'cornerBanner-mfpro cornerBanner-animation-mfpro');
+        banner.setAttribute('src', 'https://important.michalfutera.pro/cornerBanner/linktree.gif');
+        banner.setAttribute('class', 'cornerBanner-mfpro');
       
         const link = document.createElement('a');
-        link.setAttribute('href', 'https://www.buymeacoffee.com/mjfutera');
+        link.setAttribute('href', 'https://linktr.ee/mjfutera');
         link.setAttribute('target', '_blank');
 
         link.appendChild(banner);

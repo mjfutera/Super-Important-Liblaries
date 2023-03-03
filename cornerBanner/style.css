@@ -1,17 +1,20 @@
 @media all and (max-width: 850px) {
-    .cornerBanner-bmc-mfpro {
+    .cornerBanner-mfpro {
         display: none;
     }
 }
 
-.cornerBanner-bmc-mfpro {
+.cornerBanner-mfpro {
     position:fixed;
     top:0;
     right:0;
     border:0;
     z-index:2;
     max-width:30vh;
-    animation: zoom-in-zoom-out 2s ease infinite;
+}
+
+.cornerBanner-animation-mfpro {
+  animation: zoom-in-zoom-out 2s ease infinite;
 }
 
 @keyframes zoom-in-zoom-out {
