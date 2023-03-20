@@ -58,6 +58,10 @@
         return explode("/", parse_url($url, PHP_URL_PATH));
     }
 
+    function fullURL () {
+        return "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    }
+
     function connectSQLite($sql, $file) {
         $pdo = new PDO('sqlite:'.$file);
         $statement = $pdo->query($sql);
