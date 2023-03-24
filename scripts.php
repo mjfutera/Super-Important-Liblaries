@@ -86,13 +86,17 @@
      function myCURL ($url, $headers=null) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        if($headers !== null) {curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);}
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
         $response = curl_exec($ch);
-
         curl_close($ch);
-
         return json_decode($response);
      }
-?>
+
+     function createLink($e) {
+        return '<li class="mfProListItem"><a href="'.$e->url.'" class="mfProLink">'.$e->title.'</a></li>';
+    }
+    
+    function mfProMenu() {
+        echo '<ul class="mfProUnOrderedList">'.implode(array_map('createLink', myCURL('https://michalfutera.pro/wp-json/menus/v1/menus/main')->items)).'</ul>';
+    }
