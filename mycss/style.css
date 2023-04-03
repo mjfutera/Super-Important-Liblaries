@@ -1,9 +1,16 @@
 /* CSS basic liblary */
 /* By Michal Futera */
 /* https://linktr.ee/mjfutera */
-/* v. 1.000 */
+/* v. 1.001 */
 
 @import "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css";
+
+/* Czcionki */
+@font-face {
+    font-family: 'proximaNova';
+    src: url('fonts/ProximaNovaFont.otf') format('truetype');
+    font-style: normal;
+ }
 
 /* Variables */
 :root {
@@ -16,6 +23,8 @@
     --myRed: #FF4500;
     --myWhite: #FFFFF0;
     --myBlack: #131312;
+    --fiverrGreen: #1DBF73;
+    --fiverBlack: #1B1B1B;
 }
 
 /* Universal classes */
@@ -28,6 +37,8 @@
 .bg-myRed           {background-color: var(--myRed);}
 .bg-myWhite         {background-color: var(--myWhite);}
 .bg-myBlack         {background-color: var(--myBlack);}
+.bg-fiverrGreen     {background-color: var(--fiverrGreen);}
+.bg-fiverrBlack     {background-color: var(--fiverBlack);}
 
 .text-myGreen       {color:var(--myGreen);}
 .text-myYellow      {color:var(--myYellow);}
@@ -38,6 +49,8 @@
 .text-myRed         {color:var(--myRed);}
 .text-myWhite       {color:var(--myWhite);}
 .text-myBlack       {color:var(--myBlack);}
+.text-fiverrGreen   {color:var(--fiverrGreen);}
+.text-fiverrBlack   {color:var(--fiverBlack);}
 
 .rotate-left        {transform: rotate(-5deg);transform-origin: top right;}
 .rotate-right       {transform: rotate(5deg);transform-origin: top left;}
@@ -50,7 +63,8 @@
 
 .cursor-pointer     {cursor: pointer;}
 .cursor-wait        {cursor: wait;}
-.cursor-minecraft   {cursor: url(minecraft.png);}
+
+.font-proximaNova {font-family: 'proximaNova', sans-serif;}
 
 
 /* Animations */
