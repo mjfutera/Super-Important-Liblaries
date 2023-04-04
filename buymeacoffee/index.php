@@ -1,34 +1,34 @@
 <?php
 
-    function getImportantData($object) {
-        $newObject['supporter_name'] = $object -> supporter_name;
-        $newObject['support_coffees'] = $object -> support_coffees;
-        $newObject['support_note'] = $object -> support_note;
-        $newObject['support_on'] = $object -> support_updated_on;
-        return $newObject;
-    }
+// v. 1.001
 
-    header("Content-type: application/json; charset=UTF-8");
-    header('Access-Control-Allow-Origin: *');
-    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE"); 
-    header("Access-Control-Allow-Headers: Content-Type");
+header("Content-type: application/json; charset=UTF-8");
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE"); 
+header("Access-Control-Allow-Headers: Content-Type");
 
-    require('token.php');
+require('token.php');
+require('lib.php');
+$urlIndex = 3;
+
+$header = array(
+    'Authorization: Bearer ' . $api_key,
+    'Content-Type: application/json'
+);
+
+$options = array(
+    'http' => array(
+        'header' => implode("\r\n", $header),
+        'ignore_errors' => true
+    )
+);
+
+if (URLarray()[$urlIndex] == 'supporters') {
     if (!isset($_GET['page'])) {
         $url = 'https://developers.buymeacoffee.com/api/v1/supporters';
     } else {
         $url = 'https://developers.buymeacoffee.com/api/v1/supporters?page='.$_GET['page'];
     }
-    $header = array(
-        'Authorization: Bearer ' . $api_key,
-        'Content-Type: application/json'
-    );
-    $options = array(
-        'http' => array(
-            'header' => implode("\r\n", $header),
-            'ignore_errors' => true
-        )
-    );
     $context = stream_context_create($options);
     $resultFromAPI = json_decode(file_get_contents($url, false, $context));
     if(!isset($resultFromAPI->error)) {
@@ -59,5 +59,7 @@
     }
 
     echo json_encode($result);
+}
+
 
 ?>
