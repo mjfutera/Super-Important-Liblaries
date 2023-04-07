@@ -2,6 +2,8 @@
 
 // v. 1.001
 
+$urlIndex = 3; // 2 dla serwera, 3 dla localhost
+
 function getImportantData($object) {
     $newObject['supporter_name'] = $object -> supporter_name;
     $newObject['support_coffees'] = $object -> support_coffees;

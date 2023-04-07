@@ -9,7 +9,8 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 require('token.php');
 require('lib.php');
-$urlIndex = 3;
+
+$urlArray = URLarray();
 
 $header = array(
     'Authorization: Bearer ' . $api_key,
@@ -23,7 +24,7 @@ $options = array(
     )
 );
 
-if (URLarray()[$urlIndex] == 'supporters') {
+if ($urlArray[$urlIndex] == 'supporters') {
     if (!isset($_GET['page'])) {
         $url = 'https://developers.buymeacoffee.com/api/v1/supporters';
     } else {
