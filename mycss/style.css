@@ -83,10 +83,10 @@
 .myButton {
     padding: 10px 30px 10px 30px;
     border-radius: 10px;
-    width: 174px;
-    height: 50px;
+    width: auto;
+    height: auto;
     display: flex; 
-    flex-direction: column; 
+    flex-direction: row; 
     justify-content: center; 
     align-items: center;
     cursor: pointer;
@@ -97,6 +97,12 @@
 .myButton:hover {
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     transform: translateY(2px);
+}
+
+.myButton > img {
+  max-width: 60px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .myButton-myGreen           {background-color: var(--myGreen);}
@@ -112,7 +118,21 @@
 .myButton-fiverrGreen       {background-color: var(--fiverrGreen);}
 .myButton-fiverBlack        {background-color: var(--fiverBlack);}
 
+.myButton-callToAction      {animation: pulse 2s infinite;}
+
 /* Animations */
+
+@keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 
 /* Breakpoints based on bootstrap */
 
