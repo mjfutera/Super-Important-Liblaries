@@ -69,6 +69,16 @@
         return $rows;
     }
 
+    function insertToSQLite($sql, $file) {
+        try {
+            $pdo = new PDO('sqlite:'.$file);
+            $pdo->exec($sql);
+            return true;
+        } catch(PDOException $e) {
+            return false;
+        }
+    }
+
     function polishPostCodeVerifier($postcode) {
         $reg1 = '/^\d{2}-\d{3}$/';
         $reg2 = '/^\d{5}$/';

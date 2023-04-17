@@ -47,6 +47,12 @@ const data = [
                 'banner': 'twitter',
                 'alt': 'Follow me on Twitter',
                 'animation': false
+        },
+        {
+                'link': 'https://mjfutera.medium.com/',
+                'banner': 'medium',
+                'alt': 'Check my posts',
+                'animation': false
         }
 ]
 
