@@ -15,7 +15,7 @@
         return $array;
     }
 
-    function generateKey() { //For  API
+    function generateKey() {
         return implode('-', str_split(substr(strtolower(md5(microtime().rand(1000, 9999))), 0, 30), 6));
     }
 
@@ -38,7 +38,9 @@
         return ($length && $capitalLetters && $smallLetters && $numbers && $specialDigits && $noSpaces);
     }
 
-    function loginLengthValidator($login) {return (strlen($login) > 7);}
+    function loginLengthValidator($login) {
+        return (strlen($login) > 7);
+    }
 
     function generatePassword() {
         $alphabet = '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -51,18 +53,20 @@
         return implode($pass); //turn the array into a string
     }
 
-    function secureInput($input) {return htmlentities($input, ENT_QUOTES, "UTF-8");}
+    function secureInput($input) {
+        return htmlentities($input, ENT_QUOTES, "UTF-8");
+    }
 
-    function URLarray ($url = NULL) {
+    function URLarray($url = NULL) {
         if ($url===NULL) {$url = $_SERVER['REQUEST_URI']; }
         return explode("/", parse_url($url, PHP_URL_PATH));
     }
 
-    function fullURL () {
+    function fullURL() {
         return "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     }
 
-    function connectSQLite($sql, $file) {
+    function getFromSQLite($sql, $file) {
         $pdo = new PDO('sqlite:'.$file);
         $statement = $pdo->query($sql);
         $rows = $statement -> fetchAll(PDO::FETCH_ASSOC);
@@ -83,17 +87,17 @@
         $reg1 = '/^\d{2}-\d{3}$/';
         $reg2 = '/^\d{5}$/';
         return (preg_match($reg1, $postcode) || preg_match($reg2, $postcode));
-     }
+    }
      
-     function polishPostCodeModifier($postcode) {
+    function polishPostCodeModifier($postcode) {
         if(preg_match('/^\d{5}$/', $postcode)) {
             $newpostcode = str_split($postcode);
             return $newpostcode[0].$newpostcode[1]."-".$newpostcode[2].$newpostcode[3].$newpostcode[4];
         }
         return $postcode;
-     }
+    }
 
-     function myCURL ($url, $headers=null) {
+    function myCURL($url, $headers=null) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         if($headers !== null) {curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);}
@@ -101,12 +105,22 @@
         $response = curl_exec($ch);
         curl_close($ch);
         return json_decode($response);
-     }
+    }
 
-     function createLink($e) {
+    function createLink($e) {
         return '<li class="mfProListItem"><a href="'.$e->url.'" class="mfProLink">'.$e->title.'</a></li>';
     }
     
     function mfProMenu() {
         echo '<ul class="mfProUnOrderedList">'.implode(array_map('createLink', myCURL('https://michalfutera.pro/wp-json/menus/v1/menus/main')->items)).'</ul>';
     }
+    
+    function validateData($data, $allowedKeys) {
+        foreach ($data as $key => $value) {
+            if (!in_array($key, $allowedKeys)) {
+            return false;
+            }
+        }
+        return true; 
+    }
+      
