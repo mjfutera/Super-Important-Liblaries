@@ -123,4 +123,46 @@
         }
         return true; 
     }
-      
+    
+    function SQLinjection($string) {
+        $regex = "/\b(ALTER|CREATE|DELETE|DROP( +TABLE){0,1}|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|SELECT|UPDATE|UNION( +ALL){0,1})\b/";
+        return preg_match($regex, $string);
+    }
+    
+    function authorisation($roles) {
+        if (isset($_SERVER["HTTP_AUTHORIZATION"])) {
+            $auth = $_SERVER["HTTP_AUTHORIZATION"];
+            $auth_array = explode(" ", $auth);
+            $un_pw = explode(":", base64_decode($auth_array[1]));
+            $un = !SQLinjection($un_pw[0]) ? $un_pw[0] : null;
+            $pw = !SQLinjection($un_pw[1]) ? $un_pw[1] : null;
+        } else if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
+            $un = !SQLinjection($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : null;
+            $pw = !SQLinjection($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : null;            
+        } else {
+            $un = null;
+            $pw = null;
+        }
+        
+        if (!$un || !$pw) {
+            header('WWW-Authenticate: Basic realm="QuizApp"');
+            header('HTTP/1.0 401 Unauthorized');
+            $error['error']['code'] = 401;
+            $error['error']['message'] = '401 Unauthorized';
+            echo json_encode($error); 
+            die();
+        } else {
+            $sql = 'SELECT * FROM users WHERE userKey="'.$un.'" AND userSecret="'.$pw.'"';
+            $sqlResult = connectSQLite($sql, 'database.db');
+            
+            if (!is_array($sqlResult) || count($sqlResult) == 0 || !in_array($sqlResult[0]['role'], explode('|', $roles))) {
+                header('WWW-Authenticate: Basic realm="QuizApp"');
+                header('HTTP/1.0 401 Unauthorized');
+                $error['error']['code'] = 401;
+                $error['error']['message'] = '401 Unauthorized';
+                echo json_encode($error); 
+                die();
+            }
+        }
+    }
+    
