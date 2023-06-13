@@ -27,18 +27,11 @@ $options = array(
 );
 
 if ($requestType == 'supporters') {
-    if (!isset($_GET['page'])) {
-        $url = 'https://developers.buymeacoffee.com/api/v1/supporters';
-    } else {
-        $url = 'https://developers.buymeacoffee.com/api/v1/supporters?page='.$_GET['page'];
-    }
+    $url = 'https://developers.buymeacoffee.com/api/v1/supporters';
     $context = stream_context_create($options);
     $resultFromAPI = json_decode(file_get_contents($url, false, $context));
     if(!isset($resultFromAPI->error)) {
-        $result['current_page'] = $resultFromAPI->current_page;
         $result['supporters'] = array_map('getImportantData', $resultFromAPI->data);
-        
-        $result['total_pages'] = $result['last_page']['id'];
         $result['total_supporters'] = $resultFromAPI->total;
     } else {
         $$result['error'] = $resultFromAPI->error;
